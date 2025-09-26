@@ -1,0 +1,31 @@
+{
+  "name": "meme-vote",
+  "version": "1.0.0",
+  "description": "Website pentru votarea meme-urilor zilnice cu design minimalist",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "dev:simple": "npx http-server . -p 3000 -c-1 --cors",
+    "build": "echo 'Build complete'",
+    "start": "vercel dev",
+    "install-vercel": "npm install -g vercel"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.0"
+  },
+  "devDependencies": {
+    "@vercel/node": "^3.0.0",
+    "vercel": "^32.0.0",
+    "http-server": "^14.1.1"
+  },
+  "keywords": [
+    "memes",
+    "voting",
+    "democracy",
+    "minimalist",
+    "vercel",
+    "supabase"
+  ],
+  "author": "MemeVote Team",
+  "license": "MIT"
+}
