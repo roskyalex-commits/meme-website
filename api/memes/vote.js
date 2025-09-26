@@ -33,12 +33,12 @@ export default async function handler(req, res) {
       return res.status(404).json({ error: 'Meme not found' });
     }
 
-    // Check if IP has already voted for this meme today
-    const alreadyVoted = await hasVotedToday(clientIP, memeId);
+    // Check if IP has already voted today (any meme)
+    const alreadyVoted = await hasVotedToday(clientIP);
     
     if (alreadyVoted) {
       return res.status(400).json({ 
-        error: 'You have already voted for this meme today',
+        error: 'You can only vote once per day. Come back tomorrow!',
         canVote: false
       });
     }

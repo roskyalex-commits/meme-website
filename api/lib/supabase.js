@@ -24,15 +24,14 @@ export function getClientIP(req) {
          '127.0.0.1';
 }
 
-// Helper function to check if IP has voted today
-export async function hasVotedToday(ip, memeId) {
+// Helper function to check if IP has voted today (any meme)
+export async function hasVotedToday(ip, memeId = null) {
   const today = new Date().toISOString().split('T')[0];
   
   const { data, error } = await supabase
     .from('votes')
     .select('id')
     .eq('ip_address', ip)
-    .eq('meme_id', memeId)
     .gte('created_at', `${today}T00:00:00.000Z`)
     .lt('created_at', `${today}T23:59:59.999Z`)
     .single();

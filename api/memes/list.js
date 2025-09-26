@@ -61,7 +61,7 @@ export default async function handler(req, res) {
       });
     }
 
-    // Get user's votes for today to determine which memes they can vote on
+    // Check if user has voted today (any meme)
     const today = new Date().toISOString().split('T')[0];
     const { data: userVotes, error: votesError } = await supabase
       .from('votes')
@@ -74,6 +74,9 @@ export default async function handler(req, res) {
       console.error('User votes fetch error:', votesError);
     }
 
+    // Check if user has voted at all today (global rate limit)
+    const hasVotedToday = userVotes && userVotes.length > 0;
+    
     // Create a map of user votes
     const userVotesMap = {};
     if (userVotes) {
@@ -90,10 +93,10 @@ export default async function handler(req, res) {
       return memeDate === today;
     }).length;
 
-    // Add canVote property to each meme
+    // Add canVote property to each meme (global rate limit: one vote per day total)
     const memesWithVoteStatus = memes.map(meme => ({
       ...meme,
-      canVote: !userVotesMap[meme.id]
+      canVote: !hasVotedToday
     }));
 
     res.status(200).json({
